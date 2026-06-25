@@ -166,6 +166,24 @@ select.form-input{cursor:pointer}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);padding:10px 22px;font-size:13px;font-weight:600;border-radius:30px;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:999;color:#fff}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* timer */
+.timer-wrap{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.timer-bar-bg{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.timer-bar-fill{height:100%;border-radius:3px;transition:width .1s linear,background .3s}
+.timer-num{font-size:15px;font-weight:700;min-width:32px;text-align:right;transition:color .3s}
+.timer-num.danger{color:var(--red)}
+.timer-bar-fill.safe{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.timer-bar-fill.danger{background:var(--red)}
+.timeout-msg{text-align:center;padding:8px;font-size:13px;color:var(--red);font-weight:600;margin-bottom:.5rem;display:none}
+.timeout-msg.show{display:block}
+
+/* mode select */
+.mode-row{display:flex;gap:8px;margin-bottom:1.25rem}
+.mode-btn{flex:1;padding:10px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit;text-align:center;transition:all .2s;line-height:1.4}
+.mode-btn span{display:block;font-size:10px;margin-top:2px;color:var(--text3)}
+.mode-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07)}
+.mode-btn.active span{color:var(--accent)}
+
 /* panels */
 #homeScreen,#quizWrap,#resultWrap{display:none}
 #homeScreen.show,#quizWrap.show,#resultWrap.show{display:block}
@@ -201,6 +219,11 @@ select.form-input{cursor:pointer}
         </div>
         <div class="pass-badge">80%</div>
       </div>
+      <div class="section-label">モードを選択</div>
+      <div class="mode-row">
+        <button class="mode-btn active" data-mode="normal" onclick="setMode('normal')">📖 通常モード<span>じっくり考える</span></button>
+        <button class="mode-btn" data-mode="time" onclick="setMode('time')">⏱ タイムアタック<span>15秒で判断！</span></button>
+      </div>
       <button class="start-btn" id="startBtn" onclick="startQuiz()" disabled>読み込み中...</button>
       <button class="reset-btn" onclick="resetProgress()">🔄 最初からやり直す</button>
     </div>
@@ -211,6 +234,11 @@ select.form-input{cursor:pointer}
         <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
         <div class="progress-label" id="progressLabel">1/10</div>
       </div>
+      <div class="timer-wrap" id="timerWrap" style="display:none">
+        <div class="timer-bar-bg"><div class="timer-bar-fill safe" id="timerBar" style="width:100%"></div></div>
+        <div class="timer-num" id="timerNum">15</div>
+      </div>
+      <div class="timeout-msg" id="timeoutMsg">⏰ 時間切れ！不正解や！</div>
       <div class="q-card">
         <div class="q-top">
           <span class="q-num" id="qNum">問題 1</span>
@@ -294,6 +322,12 @@ const SUPABASE_KEY = 'sb_publishable_8gzvjce_ch1-c-Bwzfm-FA_Q2rHy8G0';
 const TABLE = 'quiz_questions';
 const PASS_SCORE = 8;
 const QUIZ_COUNT = 10;
+const TIME_LIMIT = 15;
+
+let currentMode = 'normal';
+let timerInterval = null;
+let timeLeft = TIME_LIMIT;
+let timedOut = false;
 
 const STAGES = [
   {level:'easy', label:'初級', emoji:'🌱', desc:'基本ルール'},
@@ -404,6 +438,11 @@ function shuffle(arr) {
   return a;
 }
 
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+}
+
 function startQuiz() {
   const pool = allQuestions.filter(q => q.level === currentStage);
   if (pool.length === 0) { showToast('問題がありません', '#ef4444'); return; }
@@ -411,6 +450,56 @@ function startQuiz() {
   quizCurrent = 0; quizScore = 0; correctCount = 0; wrongCount = 0; quizAnswered = false;
   showPanel('quizWrap');
   showQuestion();
+}
+
+function stopTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+
+function startTimer() {
+  stopTimer();
+  timeLeft = TIME_LIMIT;
+  timedOut = false;
+  updateTimerUI();
+  timerInterval = setInterval(() => {
+    timeLeft -= 0.1;
+    if (timeLeft <= 0) {
+      timeLeft = 0;
+      updateTimerUI();
+      stopTimer();
+      onTimeout();
+    } else {
+      updateTimerUI();
+    }
+  }, 100);
+}
+
+function updateTimerUI() {
+  const num = document.getElementById('timerNum');
+  const bar = document.getElementById('timerBar');
+  const secs = Math.ceil(timeLeft);
+  num.textContent = secs;
+  const pct = (timeLeft / TIME_LIMIT) * 100;
+  bar.style.width = pct + '%';
+  const danger = timeLeft <= 5;
+  num.className = 'timer-num' + (danger ? ' danger' : '');
+  bar.className = 'timer-bar-fill ' + (danger ? 'danger' : 'safe');
+}
+
+function onTimeout() {
+  timedOut = true;
+  wrongCount++;
+  // show correct answer
+  const q = quizQuestions[quizCurrent];
+  document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.answer_index) btn.classList.add('correct');
+  });
+  document.getElementById('timeoutMsg').classList.add('show');
+  const expEl = document.getElementById('explanation');
+  expEl.textContent = q.explanation;
+  expEl.className = 'explanation show';
+  document.getElementById('nextBtn').className = 'next-btn show';
 }
 
 function showQuestion() {
@@ -435,12 +524,23 @@ function showQuestion() {
   });
   document.getElementById('explanation').className = 'explanation';
   document.getElementById('nextBtn').className = 'next-btn';
+  document.getElementById('timeoutMsg').classList.remove('show');
   quizAnswered = false;
+  // timer
+  const timerWrap = document.getElementById('timerWrap');
+  if (currentMode === 'time') {
+    timerWrap.style.display = 'flex';
+    startTimer();
+  } else {
+    timerWrap.style.display = 'none';
+    stopTimer();
+  }
 }
 
 function selectAnswer(idx) {
-  if (quizAnswered) return;
+  if (quizAnswered || timedOut) return;
   quizAnswered = true;
+  stopTimer();
   const q = quizQuestions[quizCurrent];
   document.querySelectorAll('.choice-btn').forEach((btn,i) => {
     btn.disabled = true;
@@ -454,12 +554,15 @@ function selectAnswer(idx) {
 }
 
 function nextQuestion() {
+  stopTimer();
+  timedOut = false;
   quizCurrent++;
   if (quizCurrent >= quizQuestions.length) showResult();
   else showQuestion();
 }
 
 function showResult() {
+  stopTimer();
   const total = quizQuestions.length;
   const passed = quizScore >= PASS_SCORE;
   showPanel('resultWrap');
