@@ -7,93 +7,132 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0f14;
-  --surface:#161921;
-  --surface2:#1e2230;
-  --border:#2a2f3e;
-  --text:#e8eaf0;
-  --text2:#8892a4;
-  --accent:#00c2ff;
-  --accent2:#7b5cff;
+  --bg:#0a0c10;
+  --surface:#13161e;
+  --surface2:#1a1e2a;
+  --surface3:#222736;
+  --border:#2c3144;
+  --text:#e8eaf2;
+  --text2:#7b849a;
+  --text3:#4e5568;
+  --accent:#00d4ff;
+  --accent2:#7c5cfc;
   --green:#22c55e;
   --red:#ef4444;
   --orange:#f59e0b;
-  --radius:10px;
+  --radius:12px;
+  --radius-sm:8px;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif}
-.wrap{max-width:540px;margin:0 auto;padding:1.25rem 1rem 3rem}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif}
 
-/* header */
-.site-header{display:flex;align-items:center;gap:10px;margin-bottom:2rem;padding-bottom:1rem;border-bottom:0.5px solid var(--border)}
-.logo-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.logo-text{font-size:15px;font-weight:700;letter-spacing:.08em;color:var(--text)}
-.logo-sub{font-size:11px;color:var(--text2);letter-spacing:.05em;margin-top:1px}
+/* layout */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.25rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.logo-name{font-size:14px;font-weight:700;letter-spacing:.06em}
+.logo-sub{font-size:10px;color:var(--text2);letter-spacing:.04em}
+.admin-toggle{padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text2);font-size:12px;cursor:pointer;font-family:inherit}
+.admin-toggle.active{border-color:var(--accent2);color:var(--accent2)}
 
-/* tabs */
-.tab-bar{display:flex;background:var(--surface);border-radius:var(--radius);padding:4px;gap:4px;margin-bottom:1.5rem}
-.tab{flex:1;padding:8px;border:none;background:none;color:var(--text2);font-size:13px;border-radius:7px;cursor:pointer;font-family:inherit;transition:all .2s}
-.tab.active{background:var(--surface2);color:var(--text);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.main{max-width:560px;margin:0 auto;padding:1.5rem 1rem 4rem}
 
-/* level filter */
-.level-row{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
-.level-btn{flex:1;min-width:56px;padding:7px 6px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text2);font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s;text-align:center}
-.level-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,194,255,.08)}
+/* hero */
+.hero{text-align:center;padding:2rem 0 1.5rem}
+.hero-title{font-size:26px;font-weight:700;letter-spacing:.04em;margin-bottom:.5rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13px;color:var(--text2);line-height:1.6}
 
-/* progress */
+/* stats bar */
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem;text-align:center}
+.stat-box-val{font-size:22px;font-weight:700;color:var(--accent)}
+.stat-box-label{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* level select */
+.section-label{font-size:11px;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.625rem}
+.level-row{display:flex;gap:8px;margin-bottom:1.5rem}
+.level-btn{flex:1;padding:10px 6px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s;text-align:center;line-height:1.3}
+.level-btn span{display:block;font-size:10px;margin-top:2px;opacity:.7}
+.level-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07)}
+
+/* start btn */
+.start-btn{width:100%;padding:14px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.05em;margin-bottom:2rem;transition:opacity .2s}
+.start-btn:hover{opacity:.88}
+.start-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* quiz */
+.quiz-wrap{display:none}
 .progress-row{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem}
 .progress-bar{flex:1;height:3px;background:var(--surface2);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s ease}
-.progress-label{font-size:12px;color:var(--text2);white-space:nowrap}
+.progress-label{font-size:12px;color:var(--text2);white-space:nowrap;min-width:40px;text-align:right}
 
-/* question card */
-.q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
-.q-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
-.q-counter{font-size:12px;color:var(--text2)}
-.badge{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600;letter-spacing:.04em}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.375rem;margin-bottom:1rem}
+.q-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.875rem}
+.q-num{font-size:12px;color:var(--text2)}
+.badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.03em}
 .badge-easy{background:rgba(34,197,94,.15);color:var(--green)}
 .badge-mid{background:rgba(245,158,11,.15);color:var(--orange)}
 .badge-hard{background:rgba(239,68,68,.15);color:var(--red)}
-.q-text{font-size:15px;font-weight:600;line-height:1.6;color:var(--text)}
+.q-text{font-size:15px;font-weight:600;line-height:1.65;color:var(--text)}
 
-/* choices */
 .choices{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
-.choice-btn{padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text);font-size:14px;text-align:left;cursor:pointer;font-family:inherit;line-height:1.4;transition:all .15s}
-.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(0,194,255,.06)}
-.choice-btn.correct{border-color:var(--green);background:rgba(34,197,94,.12);color:#86efac}
-.choice-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.12);color:#fca5a5}
+.choice-btn{padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:14px;text-align:left;cursor:pointer;font-family:inherit;line-height:1.45;transition:all .15s;display:flex;align-items:center;gap:10px}
+.choice-btn:hover:not(:disabled){border-color:var(--accent);background:rgba(0,212,255,.05)}
+.choice-num{width:22px;height:22px;border-radius:50%;background:var(--surface3);color:var(--text2);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.choice-btn.correct{border-color:var(--green);background:rgba(34,197,94,.1)}
+.choice-btn.correct .choice-num{background:var(--green);color:#fff}
+.choice-btn.wrong{border-color:var(--red);background:rgba(239,68,68,.1)}
+.choice-btn.wrong .choice-num{background:var(--red);color:#fff}
 
-/* explanation */
-.explanation{padding:12px 14px;border-radius:10px;background:rgba(123,92,255,.1);border-left:3px solid var(--accent2);font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:1rem;display:none}
+.explanation{padding:12px 14px;border-radius:var(--radius-sm);background:rgba(124,92,252,.1);border-left:3px solid var(--accent2);font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:1rem;display:none}
 .explanation.show{display:block}
-
-/* next btn */
-.next-btn{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text);font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;letter-spacing:.04em;display:none;transition:all .2s}
+.next-btn{width:100%;padding:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:14px;cursor:pointer;font-family:inherit;font-weight:600;display:none;transition:all .2s}
 .next-btn.show{display:block}
 .next-btn:hover{border-color:var(--accent);color:var(--accent)}
 
 /* result */
-.result-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem 1.5rem;text-align:center}
-.result-score{font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
-.result-total{font-size:14px;color:var(--text2);margin-bottom:1.5rem}
-.result-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
-.stat{background:var(--surface2);border-radius:10px;padding:.875rem;text-align:center}
-.stat-label{font-size:11px;color:var(--text2);margin-bottom:4px}
-.stat-val{font-size:22px;font-weight:700}
+.result-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem 1.5rem;text-align:center;display:none}
+.result-score{font-size:60px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.result-denom{font-size:16px;color:var(--text2);margin-bottom:1.5rem;margin-top:.25rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.result-stat{background:var(--surface2);border-radius:var(--radius-sm);padding:.875rem}
+.result-stat-val{font-size:24px;font-weight:700}
+.result-stat-label{font-size:11px;color:var(--text2);margin-top:2px}
 .result-msg{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
-.result-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.result-btn{padding:10px 20px;border:1px solid var(--border);border-radius:9px;background:var(--surface2);color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
-.result-btn.primary{border-color:var(--accent);color:var(--accent);background:rgba(0,194,255,.08)}
+.result-btns{display:flex;gap:8px;justify-content:center}
+.result-btn{padding:11px 22px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s}
+.result-btn.primary{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07)}
 .result-btn:hover{opacity:.8}
 
 /* admin */
-.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.admin-count{font-size:13px;color:var(--text2)}
-.add-btn{padding:8px 14px;border:1px solid var(--accent);border-radius:8px;background:rgba(0,194,255,.08);color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;font-weight:600}
+.admin-panel{display:none}
+.admin-panel.show{display:block}
+.admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.admin-title{font-size:14px;font-weight:600;color:var(--text)}
+.add-btn{padding:8px 14px;border:1px solid var(--accent2);border-radius:var(--radius-sm);background:rgba(124,92,252,.1);color:var(--accent2);font-size:13px;cursor:pointer;font-family:inherit;font-weight:600}
 .filter-row{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
 .filter-chip{padding:5px 12px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text2);font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s}
 .filter-chip.active{border-color:var(--accent);color:var(--accent)}
-.q-list{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
-.q-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem}
+.form-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:1rem}
+.form-label{font-size:12px;color:var(--text2);margin-bottom:4px;display:block}
+.form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:13px;font-family:inherit;margin-bottom:12px;outline:none;transition:border .2s}
+.form-input:focus{border-color:var(--accent)}
+textarea.form-input{resize:vertical;min-height:64px}
+select.form-input{cursor:pointer}
+.ans-group{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.ans-row{display:flex;align-items:center;gap:8px}
+.ans-radio{width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--accent)}
+.ans-input{flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border .2s}
+.ans-input:focus{border-color:var(--accent)}
+.ans-input.selected{border-color:var(--green);background:rgba(34,197,94,.08)}
+.form-btns{display:flex;gap:8px}
+.save-btn{flex:1;padding:10px;border:1px solid var(--accent);border-radius:var(--radius-sm);background:rgba(0,212,255,.08);color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;font-weight:700}
+.cancel-btn{padding:10px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit}
+
+.q-list{display:flex;flex-direction:column;gap:8px}
+.q-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
 .q-item-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
 .q-item-text{font-size:13px;font-weight:500;color:var(--text);flex:1;line-height:1.5}
 .q-item-actions{display:flex;gap:6px;flex-shrink:0}
@@ -101,64 +140,68 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Hiragi
 .del-btn{padding:4px 10px;border:1px solid rgba(239,68,68,.4);border-radius:6px;background:rgba(239,68,68,.08);color:var(--red);font-size:12px;cursor:pointer;font-family:inherit}
 .q-item-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
 
-/* form */
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
-.form-title{font-size:14px;font-weight:700;margin-bottom:1rem;color:var(--text)}
-.form-label{font-size:12px;color:var(--text2);margin-bottom:4px;display:block}
-.form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font-size:13px;font-family:inherit;margin-bottom:12px;outline:none;transition:border .2s}
-.form-input:focus{border-color:var(--accent)}
-textarea.form-input{resize:vertical;min-height:64px}
-.form-select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font-size:13px;font-family:inherit;margin-bottom:12px;outline:none}
-.ans-group{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.ans-row{display:flex;align-items:center;gap:8px}
-.ans-radio{width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--accent)}
-.ans-input{flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border .2s}
-.ans-input:focus{border-color:var(--accent)}
-.ans-input.selected{border-color:var(--green);background:rgba(34,197,94,.08)}
-.form-btns{display:flex;gap:8px}
-.save-btn{flex:1;padding:10px;border:1px solid var(--accent);border-radius:8px;background:rgba(0,194,255,.1);color:var(--accent);font-size:13px;cursor:pointer;font-family:inherit;font-weight:700}
-.cancel-btn{padding:10px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit}
+/* states */
+.loading{text-align:center;padding:3rem;color:var(--text2);font-size:14px}
+.empty-msg{text-align:center;padding:2rem;color:var(--text2);font-size:13px}
+.error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--red);margin-bottom:1rem}
+.rule-notice{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--orange);line-height:1.6;margin-bottom:1rem;display:flex;gap:8px}
 
 /* toast */
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);padding:10px 22px;background:#22c55e;color:#fff;font-size:13px;font-weight:600;border-radius:30px;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:999}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);padding:10px 22px;font-size:13px;font-weight:600;border-radius:30px;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:999;color:#fff}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.empty-msg{text-align:center;padding:2rem;color:var(--text2);font-size:13px}
 
-/* rule changed notice */
-.rule-notice{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--orange);line-height:1.6;margin-bottom:1.25rem;display:flex;gap:8px;align-items:flex-start}
+/* spinner */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="site-header">
-    <div class="logo-mark">⚽</div>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">⚽</div>
     <div>
-      <div class="logo-text">FUTSAL RULE QUIZ</div>
+      <div class="logo-name">FUTSAL QUIZ</div>
       <div class="logo-sub">フットサル ルールクイズ</div>
     </div>
   </div>
+  <button class="admin-toggle" id="adminToggle" onclick="toggleAdmin()">管理画面</button>
+</div>
 
-  <div class="tab-bar">
-    <button class="tab active" onclick="switchTab('quiz')">クイズ</button>
-    <button class="tab" onclick="switchTab('admin')">問題管理</button>
-  </div>
+<div class="main">
 
-  <!-- QUIZ -->
+  <!-- QUIZ PANEL -->
   <div id="quizPanel">
-    <div class="level-row">
-      <button class="level-btn active" data-level="all" onclick="setLevel('all')">すべて</button>
-      <button class="level-btn" data-level="easy" onclick="setLevel('easy')">初級</button>
-      <button class="level-btn" data-level="mid" onclick="setLevel('mid')">中級</button>
-      <button class="level-btn" data-level="hard" onclick="setLevel('hard')">上級</button>
+    <div class="hero">
+      <div class="hero-title">FUTSAL RULE QUIZ</div>
+      <div class="hero-sub">フットサルのルールを楽しく覚えよう<br>審判ライセンス取得にも役立つ！</div>
     </div>
-    <div id="quizArea">
+
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-box"><div class="stat-box-val" id="statTotal">-</div><div class="stat-box-label">総問題数</div></div>
+      <div class="stat-box"><div class="stat-box-val" id="statEasy">-</div><div class="stat-box-label">初級</div></div>
+      <div class="stat-box"><div class="stat-box-val" id="statHard">-</div><div class="stat-box-label">上級</div></div>
+    </div>
+
+    <div id="homeScreen">
+      <div class="section-label">難易度を選択</div>
+      <div class="level-row">
+        <button class="level-btn active" data-level="all" onclick="setLevel('all')">すべて<span>全問題</span></button>
+        <button class="level-btn" data-level="easy" onclick="setLevel('easy')">初級<span>基本ルール</span></button>
+        <button class="level-btn" data-level="mid" onclick="setLevel('mid')">中級<span>審判向け</span></button>
+        <button class="level-btn" data-level="hard" onclick="setLevel('hard')">上級<span>マニアック</span></button>
+      </div>
+      <button class="start-btn" id="startBtn" onclick="startQuiz()" disabled>読み込み中...</button>
+    </div>
+
+    <div class="quiz-wrap" id="quizWrap">
       <div class="progress-row">
         <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        <div class="progress-label" id="progressLabel">1 / 10</div>
+        <div class="progress-label" id="progressLabel">1/10</div>
       </div>
       <div class="q-card">
         <div class="q-top">
-          <span class="q-counter" id="qCounter">問題 1</span>
+          <span class="q-num" id="qNum">問題 1</span>
           <span class="badge" id="qBadge"></span>
         </div>
         <div class="q-text" id="qText"></div>
@@ -167,42 +210,42 @@ textarea.form-input{resize:vertical;min-height:64px}
       <div class="explanation" id="explanation"></div>
       <button class="next-btn" id="nextBtn" onclick="nextQuestion()">次の問題 →</button>
     </div>
-    <div id="resultArea" style="display:none">
-      <div class="result-card">
-        <div class="result-score" id="resultScore"></div>
-        <div class="result-total" id="resultTotal"></div>
-        <div class="result-stats" id="resultStats"></div>
-        <div class="result-msg" id="resultMsg"></div>
-        <div class="result-btns">
-          <button class="result-btn primary" onclick="restartQuiz()">もう一度挑戦</button>
-        </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-denom" id="resultDenom"></div>
+      <div class="result-grid" id="resultGrid"></div>
+      <div class="result-msg" id="resultMsg"></div>
+      <div class="result-btns">
+        <button class="result-btn primary" onclick="backToHome()">もう一度</button>
       </div>
     </div>
   </div>
 
-  <!-- ADMIN -->
-  <div id="adminPanel" style="display:none">
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="adminPanel">
     <div class="rule-notice">
       <span>⚠️</span>
-      <span>ルール改定があったら「編集」ボタンから解説を更新してな。毎年確認推奨！</span>
+      <span>ルール改定があったら「編集」から更新してな。毎年確認推奨！</span>
     </div>
-    <div class="admin-header">
-      <span class="admin-count" id="adminCount"></span>
-      <button class="add-btn" onclick="openForm()">＋ 問題追加</button>
+    <div class="admin-head">
+      <span class="admin-title" id="adminCount">問題一覧</span>
+      <button class="add-btn" onclick="openForm()">＋ 追加</button>
     </div>
     <div class="filter-row">
-      <button class="filter-chip active" data-f="all" onclick="setFilter('all')">すべて</button>
-      <button class="filter-chip" data-f="easy" onclick="setFilter('easy')">初級</button>
-      <button class="filter-chip" data-f="mid" onclick="setFilter('mid')">中級</button>
-      <button class="filter-chip" data-f="hard" onclick="setFilter('hard')">上級</button>
+      <button class="filter-chip active" data-f="all" onclick="setAdminFilter('all')">すべて</button>
+      <button class="filter-chip" data-f="easy" onclick="setAdminFilter('easy')">初級</button>
+      <button class="filter-chip" data-f="mid" onclick="setAdminFilter('mid')">中級</button>
+      <button class="filter-chip" data-f="hard" onclick="setAdminFilter('hard')">上級</button>
     </div>
     <div id="formArea" style="display:none">
       <div class="form-card">
         <div class="form-title" id="formTitle">問題を追加</div>
+        <div id="formError"></div>
         <label class="form-label">問題文</label>
         <textarea class="form-input" id="fQuestion" placeholder="例：GKがボールを手で持てる時間は？"></textarea>
         <label class="form-label">難易度</label>
-        <select class="form-select" id="fLevel">
+        <select class="form-input" id="fLevel">
           <option value="easy">初級</option>
           <option value="mid">中級</option>
           <option value="hard">上級</option>
@@ -212,273 +255,352 @@ textarea.form-input{resize:vertical;min-height:64px}
         <label class="form-label">解説</label>
         <textarea class="form-input" id="fExp" placeholder="正解の解説を入力"></textarea>
         <div class="form-btns">
-          <button class="save-btn" onclick="saveQuestion()">保存</button>
+          <button class="save-btn" id="saveBtn" onclick="saveQuestion()">保存</button>
           <button class="cancel-btn" onclick="closeForm()">キャンセル</button>
         </div>
       </div>
     </div>
-    <div class="q-list" id="qList"></div>
+    <div id="adminList"></div>
   </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const INITIAL=[
-  {id:1,level:'easy',q:'フットサルのコートに入れる選手の人数は？（GK含む）',choices:['4人','5人','6人','7人'],ans:1,exp:'フットサルは1チーム5人（GK1人＋フィールドプレーヤー4人）でプレーします。'},
-  {id:2,level:'easy',q:'フットサルのボールはサッカーと比べてどう違う？',choices:['大きくて軽い','小さくて重い','同じサイズ','大きくて重い'],ans:1,exp:'フットサルは4号球を使用。サッカーより小さく、弾みを抑えた低バウンドボールを使います。'},
-  {id:3,level:'easy',q:'アウトになった場合、どうやって再開する？',choices:['スローイン','キックイン','コーナーキック','ドロップボール'],ans:1,exp:'フットサルにはスローインがなく、ボールが外に出たらキックインで再開します。'},
-  {id:4,level:'easy',q:'フットサルの試合時間は1ピリオド何分？',choices:['15分','20分','25分','45分'],ans:1,exp:'フットサルは前後半各20分（計40分）。時計はプレーが止まるたびに止める実働時間制です。'},
-  {id:5,level:'easy',q:'GKはボールを手で持ったまま何秒以内に放さないといけない？（4秒ルール）',choices:['3秒','4秒','5秒','10秒'],ans:1,exp:'GKはボールを手で持ったまま4秒以内に放さないといけません（4秒ルール）。足でコントロールしている場合も同様に4秒以内。超えると相手のキックインになります。'},
-  {id:6,level:'easy',q:'フットサルでは何枚イエローカードをもらうと退場になる？',choices:['1枚','2枚','3枚','4枚'],ans:1,exp:'2枚目のイエローカードで退場（レッドカード相当）になります。'},
-  {id:7,level:'easy',q:'フットサルのゴールのサイズは？',choices:['幅2m×高さ1m','幅3m×高さ2m','幅6m×高さ2.44m','幅7.32m×高さ2.44m'],ans:1,exp:'フットサルのゴールは幅3m×高さ2mです。サッカーのゴール（幅7.32m×高さ2.44m）より小さいです。'},
-  {id:8,level:'mid',q:'キックインのとき、相手選手はボールから何メートル離れないといけない？（5メートルルール）',choices:['1m','3m','5m','10m'],ans:2,exp:'キックインのとき、相手選手はボールから5メートル以上離れないといけません（5メートルルール）。守らないと警告対象になります。'},
-  {id:9,level:'mid',q:'フリーキックのとき、相手選手はボールからどのくらい離れないといけない？',choices:['1m','3m','5m','10m'],ans:2,exp:'フリーキックでも相手選手はボールから5メートル以上離れる義務があります（5メートルルール）。壁を作れますが5m以内はNGです。'},
-  {id:10,level:'mid',q:'GKが手でボールを放した後、同じピリオド内で自陣の選手からのパスを手で受け取れる？',choices:['いつでも受け取れる','いったん放したら手では受け取れない','相手が触れてからなら受け取れる','4秒たてば受け取れる'],ans:2,exp:'GKがいったん放したボールを自陣選手からのパスで手で再受け取りはできません（バックパスルール）。相手がボールに触れてから初めて手で受け取れます。'},
-  {id:11,level:'mid',q:'味方フィールドプレーヤーが足でGKにバックパスを出した。GKは手で取れる？',choices:['取れる','取れない','相手陣内なら取れる','GKエリア内なら取れる'],ans:1,exp:'足での意図的なバックパスをGKが手で処理することは禁止です（バックパスルール）。違反すると間接フリーキックになります。'},
-  {id:12,level:'mid',q:'アキュムレートファウル（累積ファウル）が6つ以上になると？',choices:['試合終了','第2PKが与えられる','選手1人退場','警告のみ'],ans:1,exp:'1ピリオドで累積ファウルが6つ以上になると、以降のファウルは第2PK（10mライン）が与えられます。フットサル独特のルールです。'},
-  {id:13,level:'mid',q:'フットサルの交代ルールはどれが正しい？',choices:['前後半合わせて3回まで','5人まで','回数・人数ともに無制限','ハーフタイムのみ'],ans:2,exp:'フットサルは回数・人数制限なしのフライングチェンジ（交代ゾーンでの随時交代）が可能です。'},
-  {id:14,level:'mid',q:'選手が退場になった場合、何分後にベンチから交代選手が入れる？',choices:['1分後','2分後','5分後','入れない'],ans:1,exp:'退場後2分間は数的不利でプレー。2分後または相手がゴールを決めた後に交代選手が入れます。'},
-  {id:15,level:'mid',q:'GKが自陣ゴールエリア内でボールを足でコントロールしている。4秒ルールは適用される？',choices:['適用される','足なら適用されない','エリア外に出たときから適用','GKエリア内では無制限'],ans:0,exp:'4秒ルールはGKがボールをコントロールしている状態全般に適用されます。手でも足でも、GKが意図的にコントロールしていれば4秒以内に放たなければなりません。'},
-  {id:16,level:'hard',q:'GKが4秒以内に放したが、すぐ別の味方に渡してまたGKに戻した場合は？',choices:['問題なし','間接フリーキック','直接フリーキック','第2PK'],ans:1,exp:'GKが放したボールを意図的に同じピリオド内で手で再受け取りするのは違反。間接フリーキックになります（バックパスルールの一部）。'},
-  {id:17,level:'hard',q:'タイムアウトは1チーム各ピリオドに何回取れる？',choices:['1回','2回','3回','なし'],ans:0,exp:'タイムアウトは各チーム各ピリオドに1回（1分間）取れます。延長戦では各1回追加されます。'},
-  {id:18,level:'hard',q:'キックインのキッカーは、他の選手が触れる前に再びボールに触れられる？',choices:['触れない','触れる','足なら触れる','GKなら触れる'],ans:0,exp:'キックインのキッカーは、他の選手がボールに触れるまで再びボールに触れることができません。違反すると相手のキックインになります。'},
-  {id:19,level:'hard',q:'ゴールクリアランスの説明として正しいのは？',choices:['GKが手でボールを投げて再開','攻撃側がゴールラインを出したときGKがエリア内からキックで再開','ゴール前でのコーナーキック','守備側がゴールラインを出したときの再開'],ans:1,exp:'ゴールクリアランスは攻撃側がボールをゴールラインの外に出したとき、GKがゴールエリア内からキックで再開する方法です。'},
-  {id:20,level:'hard',q:'第2PK（10mPK）でGKはキックされるまでどこにいないといけない？',choices:['ゴールライン上','ゴールエリア内ならどこでも','動き方の制限なし','ゴールポストに触れていないといけない'],ans:0,exp:'第2PKではGKはキックされるまでゴールライン上にいなければなりません。左右にポスト間を動くことは可能です。'},
+const SUPABASE_URL = 'https://bxailsvrusrbjmbhlpqh.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_8gzvjce_ch1-c-Bwzfm-FA_Q2rHy8G0';
+const TABLE = 'quiz_questions';
 
-  // === 追加問題（初級） ===
-  {id:21,level:'easy',q:'フットサルのコートの大きさとして正しいのは？',choices:['縦90m×横60m','縦40m×横20m（最小）〜縦42m×横25m（最大）','縦105m×横68m','縦50m×横30m'],ans:1,exp:'フットサルコートは国際基準で縦38〜42m×横18〜25m程度。サッカーコートよりずっと小さいです。'},
-  {id:22,level:'easy',q:'フットサルの試合で使うボールは何号球？',choices:['2号球','3号球','4号球','5号球'],ans:2,exp:'フットサルは4号球を使用します。ただし低バウンドの専用ボールで、通常のサッカー4号球とは異なります。'},
-  {id:23,level:'easy',q:'試合中、GK以外の選手がGKエリア内に入ることは？',choices:['いつでも入れる','絶対に入れない','守備時のみ入れる','ボールを追うときのみ入れる'],ans:0,exp:'フィールドプレーヤーはGKエリア内に入ることができます。ただしGKエリア内からのシュートは認められません。'},
-  {id:24,level:'easy',q:'コーナーキックのとき、ボールはどこに置く？',choices:['コーナーラインの外','コーナーアーク内','ゴールエリアの角','ハーフウェイライン上'],ans:1,exp:'コーナーキックはコーナーアーク（コーナーフラッグ近くの小さな半円）の内側にボールを置いてキックします。'},
-  {id:25,level:'easy',q:'フットサルでオフサイドルールはある？',choices:['ある','ない','ゴール前10mのみある','相手陣内のみある'],ans:1,exp:'フットサルにはオフサイドルールがありません！これもサッカーと大きく違うポイントです。'},
-  {id:26,level:'easy',q:'試合中にボールが天井や上部の構造物に当たった場合は？',choices:['プレー続行','相手チームのキックインで再開','コイントスで決める','ドロップボールで再開'],ans:1,exp:'ボールが天井など上部の障害物に当たった場合、相手チームのキックインで再開します。当てたチームの相手にボールが渡ります。'},
-  {id:27,level:'easy',q:'フットサルのGKエリア（ゴールエリア）の形は？',choices:['四角形','半円形','三角形','六角形'],ans:1,exp:'フットサルのGKエリアはゴールポストの内側から6mの半円形です。サッカーと違い半円形なのが特徴。'},
-  {id:28,level:'easy',q:'ペナルティスポット（PK位置）はゴールからどのくらいの距離？',choices:['6m','8m','10m','11m'],ans:0,exp:'フットサルのPKスポットはゴールから6mの位置です。第2PK（累積ファウル後）は10mの位置になります。'},
-  {id:29,level:'easy',q:'試合前のコイントスに勝ったチームが選べるのは？',choices:['キックオフかエンドの選択','必ずキックオフ','必ずエンド選択','どちらも選べない'],ans:0,exp:'コイントスに勝ったチームはキックオフをするかエンドを選ぶかを選択できます。負けたチームは残りを選びます。'},
-  {id:30,level:'easy',q:'キックオフのとき、ボールを最初に触れるのは何人まで？',choices:['1人のみ','2人まで','全員OK','GK以外ならOK'],ans:0,exp:'キックオフはキッカー1人がボールを前方にキックします。他の選手はボールが動いてから関与できます。'},
-  {id:31,level:'easy',q:'フットサルの審判は何人？',choices:['1人','2人（主審・副審）','3人','4人'],ans:1,exp:'フットサルは主審1人と副審1人の計2人で試合を管理します（公式戦では第3審判や計時係も加わる場合あり）。'},
-  {id:32,level:'easy',q:'フィールドプレーヤーがGKエリア内からシュートして入った場合は？',choices:['ゴール認定','ノーゴール（ゴールクリアランスで再開）','相手チームのFK','PK'],ans:1,exp:'フィールドプレーヤーがGKエリア内からシュートしてもゴールにはなりません。相手GKのゴールクリアランスで再開します。'},
-
-  // === 追加問題（中級） ===
-  {id:33,level:'mid',q:'キックインを行う前に、キッカーはボールをラインからどのくらいの距離に置く？',choices:['ライン上','ラインから25cm以内','ラインから1m以内','どこでもOK'],ans:1,exp:'キックインはボールをタッチラインから25cm以内に置いてキックします。ラインを踏んではいけません。'},
-  {id:34,level:'mid',q:'直接フリーキックと間接フリーキックの違いは？',choices:['距離が違う','直接FKは直接ゴールを狙えるが間接FKは他の選手が触れてからでないとゴールにならない','間接FKのほうが重い反則','どちらも同じ'],ans:1,exp:'直接フリーキックはそのままゴールを狙えます。間接フリーキックは必ず他の選手が触れてからでないとゴールになりません。'},
-  {id:35,level:'mid',q:'累積ファウルはピリオドごとにリセットされる？',choices:['される','されない','延長戦のみリセットされる','後半開始時のみリセット'],ans:0,exp:'累積ファウル（アキュムレートファウル）はピリオドごとにリセットされます。前半に5つファウルしても、後半は0からスタートです。'},
-  {id:36,level:'mid',q:'フットサルの交代ゾーンはどこにある？',choices:['どこでも交代できる','自陣サイドライン沿いの指定エリア','ハーフウェイライン上','どちらのサイドラインでも可'],ans:1,exp:'交代ゾーンは自陣サイドライン沿いの5mエリア。出る選手がエリアを出てから入る選手が入るのが基本です。'},
-  {id:37,level:'mid',q:'GKがゴールクリアランスを行うとき、相手選手はどこにいないといけない？',choices:['GKエリアの外','ハーフウェイラインの外','5m以上離れる','制限なし'],ans:0,exp:'ゴールクリアランスのとき、相手選手はGKエリアの外にいなければなりません。GKエリア内に入って妨害はできません。'},
-  {id:38,level:'mid',q:'選手が試合中に装備（シューズ等）の一部を失った場合は？',choices:['すぐ退場しないといけない','次のボールデッドまでプレー続行できる','即座にプレーを止める','審判の判断による'],ans:1,exp:'装備の一部を失っても次のボールデッドまではプレーを続けられます。ただし直ちに修正または交換する必要があります。'},
-  {id:39,level:'mid',q:'コーナーキックのとき、相手選手はボールから何メートル離れないといけない？',choices:['3m','5m','10m','制限なし'],ans:1,exp:'コーナーキックでも相手選手はボールから5メートル以上離れる必要があります（5メートルルール）。'},
-  {id:40,level:'mid',q:'試合中にボールが破裂したり形が変わった場合は？',choices:['直前にボールに最後に触れた選手のチームが再開','ドロップボールで再開','审判がボールを交換してドロップボールで再開','相手チームのキックインで再開'],ans:2,exp:'試合中にボールが使用不能になった場合、審判がボールを交換してドロップボールで再開します。'},
-  {id:41,level:'mid',q:'フットサルで「ダブルペナルティ」とも呼ばれるのは？',choices:['1試合で2枚イエロー','第2PK（累積ファウル後のPK）','PKで外した後の再キック','2人同時退場'],ans:1,exp:'第2PK（10mPK）は累積ファウル6つ目以降に与えられるペナルティで、「ダブルペナルティ」とも呼ばれます。ゴールまでの距離が通常PKより4m遠い分、決定率が下がります。'},
-  {id:42,level:'mid',q:'審判がプレーを止めずにアドバンテージを適用した場合、累積ファウルはどうなる？',choices:['カウントされない','カウントされる','審判の裁量による','後でまとめてカウント'],ans:1,exp:'アドバンテージを適用した場合でも、反則は反則なのでファウルは累積ファウルにカウントされます。'},
-  {id:43,level:'mid',q:'フットサルのPK（ペナルティキック）で、キッカーはボールを蹴った後すぐ自分でフォローできる？',choices:['できる','できない','GKが触れた後ならできる','審判の合図後ならできる'],ans:2,exp:'PKのキッカーは自分が蹴ったボールを直接触ることはできません。GKが触れた（はじいたなど）後であれば、フォローしてゴールを狙えます。'},
-  {id:44,level:'mid',q:'試合終了のホイッスル後、ボールがゴールに入ったとき？',choices:['ゴール認定','ノーゴール','映像確認が必要','審判の判断による'],ans:1,exp:'終了のホイッスル後にボールがゴールに入ってもゴールにはなりません。ホイッスルがゴールより先に鳴れば試合終了です。'},
-
-  // === 追加問題（上級） ===
-  {id:45,level:'hard',q:'間接フリーキックのとき、ボールが直接ゴールに入った場合は？',choices:['ゴール認定','相手のゴールクリアランスで再開','コーナーキックで再開','ドロップボールで再開'],ans:1,exp:'間接FKのボールが他の選手に触れずに直接ゴールに入ってもゴールにはなりません。相手チームのゴールクリアランスで再開します。'},
-  {id:46,level:'hard',q:'GKが相手GKエリアからボールを手で放った場合、ハーフウェイラインを越えたらどうなる？',choices:['問題なし','相手チームのキックインで再開','相手チームの間接FK','ドロップボールで再開'],ans:1,exp:'GKがゴールエリア内から手で放ったボールがハーフウェイラインを越えた場合、相手チームのキックインでハーフウェイライン上から再開されます。'},
-  {id:47,level:'hard',q:'選手がイエローカードをもらった後、同一試合でそのカードが取り消されることはある？',choices:['ない','審判の誤りが判明した場合はある','ハーフタイムにリセット','監督の抗議で取り消せる'],ans:1,exp:'審判が誤ってカードを提示した場合（例えば全く別の選手と間違えた場合など）は、取り消しができます。ただし通常のカードは取り消しになりません。'},
-  {id:48,level:'hard',q:'ペナルティキックのとき、キッカー以外のフィールドプレーヤーはどこにいないといけない？',choices:['ハーフウェイラインの外','PKスポットから5m以上離れ、かつGKエリアの外','コートの外','制限なし'],ans:1,exp:'PKのとき、キッカーとGK以外の選手はPKスポットから5m以上離れ、かつGKエリアの外にいなければなりません。'},
-  {id:49,level:'hard',q:'試合中に審判がプレーを止める前に第3のGKエリアへの侵入（バックパスルール違反）があったが、攻撃側にアドバンテージがある。どうする？',choices:['アドバンテージを適用してプレー続行','即座にプレーを止めて間接FK','即座にプレーを止めて直接FK','後で口頭注意のみ'],ans:0,exp:'バックパス違反でも攻撃側にアドバンテージがある場合は、審判はアドバンテージを適用してプレーを続けさせることができます。'},
-  {id:50,level:'hard',q:'選手が退場（レッドカード）になった後、そのチームがゴールを決めた場合は？',choices:['退場した選手はすぐ戻れる','退場した選手は戻れない','退場は取り消しになる','交代選手が即座に入れる'],ans:1,exp:'自分のチームがゴールを決めても退場した選手自身はコートに戻れません。2分後のルールは相手がゴールを決めたときのものです。'},
-  {id:51,level:'hard',q:'フットサルの延長戦のルールは？',choices:['15分×2本','5分×2本（Vゴール方式の場合も）','10分×2本','延長なしでPK'],ans:1,exp:'フットサルの延長戦は一般的に5分×2本で行われます。大会規定によりVゴール（サドンデス）方式が採用される場合もあります。'},
-  {id:52,level:'hard',q:'審判がドロップボールを行うとき、ボールが地面に触れる前に選手が触れたら？',choices:['ドロップボールのやり直し','そのままプレー続行','反則で相手チームのFK','警告'],ans:0,exp:'ドロップボールは地面に触れてからでないとプレーできません。触れる前に選手が触れた場合はドロップボールをやり直します。'},
-  {id:53,level:'hard',q:'同点のまま試合が終了し、PKで決着をつける場合、最初のキッカーはどうやって決める？',choices:['コイントスで決める','前半最初にキックオフしたチームが先行','ホームチームが先行','攻撃側が先行'],ans:0,exp:'PKセンターはコイントスで先攻・後攻を決めます。また、どちら側のゴールを使うかも通常コイントスで決めます。'},
-  {id:54,level:'hard',q:'フットサルの第2PK（累積ファウル後）のとき、壁を作ることができる？',choices:['できる','できない','5人まで壁を作れる','GKのみ壁に入れる'],ans:1,exp:'第2PKは通常のFKではなくPK形式なので、壁を作ることはできません。キッカーとGKの1対1になります。'},
-  {id:55,level:'hard',q:'コーナーキックのボールが直接ゴールに入った場合は？',choices:['ゴール認定','ノーゴール','相手のPK','ドロップボール'],ans:0,exp:'コーナーキックから直接ゴールに入った場合はゴールになります。ただし自分のゴールに直接入れてしまったオウンゴールは相手のコーナーキックになります。'},
-  {id:56,level:'hard',q:'試合中、主審と副審の判定が異なった場合は？',choices:['主審の判定が優先','副審の判定が優先','より厳しいほうの判定','コイントスで決める'],ans:0,exp:'フットサルでも主審が最終決定権を持ちます。副審はあくまでアドバイスや確認の役割で、最終的な判定は主審が下します。'},
-  {id:57,level:'hard',q:'フットサルの試合中にGKがフィールドプレーヤーと交代した場合、どのような手続きが必要？',choices:['審判への通知なしに自由に交代できる','次のボールデッドに審判へ通知して交代','試合前のメンバー表変更が必要','ハーフタイムのみ可能'],ans:1,exp:'GKとフィールドプレーヤーを入れ替える場合も通常の交代と同じく、次のボールデッドに交代ゾーンから交代手続きをとります。'},
-  {id:58,level:'hard',q:'選手がベンチエリアから出てコートに無断で入った場合は？',choices:['口頭注意のみ','イエローカード','レッドカード','交代扱いになる'],ans:1,exp:'ベンチエリアから無断でコートに入った選手にはイエローカードが提示されます。正規の交代手続きなしの入場は反則です。'},
-  {id:59,level:'hard',q:'フットサルで「パワープレー」とは何？',choices:['特定の攻撃戦術の名称','GKをフィールドプレーヤーに替えて6人で攻める戦術','累積ファウルが6以上の状態','延長戦での特別ルール'],ans:1,exp:'フットサルのパワープレーはGKをフィールドプレーヤーに交代させ、6人で攻める戦術です。数的有利を作れますが、空のゴールへのロングシュートを打たれるリスクもあります。'},
-  {id:60,level:'hard',q:'パワープレー中（GK不在）に相手がロングシュートで空ゴールに決めた場合、そのゴールは有効？',choices:['有効','無効','GKが戻れば無効','審判の判断による'],ans:0,exp:'パワープレー中の空ゴールへのシュートも完全に有効なゴールです。パワープレーは自チームのリスクを承知の上で行う戦術です。'}
+const INITIAL_QUESTIONS = [
+  {level:'easy',question:'フットサルのコートに入れる選手の人数は？（GK含む）',choices:['4人','5人','6人','7人'],answer_index:1,explanation:'フットサルは1チーム5人（GK1人＋フィールドプレーヤー4人）でプレーします。'},
+  {level:'easy',question:'フットサルのボールはサッカーと比べてどう違う？',choices:['大きくて軽い','小さくて重い','同じサイズ','大きくて重い'],answer_index:1,explanation:'フットサルは4号球を使用。サッカーより小さく、弾みを抑えた低バウンドボールを使います。'},
+  {level:'easy',question:'アウトになった場合、どうやって再開する？',choices:['スローイン','キックイン','コーナーキック','ドロップボール'],answer_index:1,explanation:'フットサルにはスローインがなく、ボールが外に出たらキックインで再開します。'},
+  {level:'easy',question:'フットサルの試合時間は1ピリオド何分？',choices:['15分','20分','25分','45分'],answer_index:1,explanation:'フットサルは前後半各20分（計40分）。時計はプレーが止まるたびに止める実働時間制です。'},
+  {level:'easy',question:'GKはボールを手で持ったまま何秒以内に放さないといけない？（4秒ルール）',choices:['3秒','4秒','5秒','10秒'],answer_index:1,explanation:'GKはボールを手で持ったまま4秒以内に放さないといけません（4秒ルール）。足でコントロールしている場合も同様。超えると相手のキックインになります。'},
+  {level:'easy',question:'フットサルでは何枚イエローカードをもらうと退場になる？',choices:['1枚','2枚','3枚','4枚'],answer_index:1,explanation:'2枚目のイエローカードで退場（レッドカード相当）になります。'},
+  {level:'easy',question:'フットサルのゴールのサイズは？',choices:['幅2m×高さ1m','幅3m×高さ2m','幅6m×高さ2.44m','幅7.32m×高さ2.44m'],answer_index:1,explanation:'フットサルのゴールは幅3m×高さ2mです。サッカーのゴールより小さいです。'},
+  {level:'easy',question:'フットサルのGKエリア（ゴールエリア）の形は？',choices:['四角形','半円形','三角形','六角形'],answer_index:1,explanation:'フットサルのGKエリアはゴールポストの内側から6mの半円形です。サッカーと違い半円形なのが特徴。'},
+  {level:'easy',question:'フットサルでオフサイドルールはある？',choices:['ある','ない','ゴール前10mのみある','相手陣内のみある'],answer_index:1,explanation:'フットサルにはオフサイドルールがありません！これもサッカーと大きく違うポイントです。'},
+  {level:'easy',question:'ペナルティスポット（PK位置）はゴールからどのくらいの距離？',choices:['6m','8m','10m','11m'],answer_index:0,explanation:'フットサルのPKスポットはゴールから6mの位置です。第2PK（累積ファウル後）は10mの位置になります。'},
+  {level:'easy',question:'試合中にボールが天井や上部の構造物に当たった場合は？',choices:['プレー続行','相手チームのキックインで再開','コイントスで決める','ドロップボールで再開'],answer_index:1,explanation:'ボールが天井など上部の障害物に当たった場合、相手チームのキックインで再開します。'},
+  {level:'easy',question:'フットサルの審判は何人？',choices:['1人','2人（主審・副審）','3人','4人'],answer_index:1,explanation:'フットサルは主審1人と副審1人の計2人で試合を管理します（公式戦では第3審判や計時係も加わる場合あり）。'},
+  {level:'easy',question:'攻撃側のフィールドプレーヤーがGKエリア内からシュートしてゴールに入った場合は？',choices:['ゴール認定','ノーゴール（ゴールクリアランスで再開）','相手チームのFK','PK'],answer_index:0,explanation:'攻撃側のフィールドプレーヤーはGKエリア内に入ってシュートしてもゴールになります。ただし守備側のGK以外の選手がGKエリア内でプレーすることには制限があります。'},
+  {level:'easy',question:'コーナーキックのとき、ボールはどこに置く？',choices:['コーナーラインの外','コーナーアーク内','ゴールエリアの角','ハーフウェイライン上'],answer_index:1,explanation:'コーナーキックはコーナーアーク（コーナーフラッグ近くの小さな半円）の内側にボールを置いてキックします。'},
+  {level:'easy',question:'試合前のコイントスに勝ったチームが選べるのは？',choices:['キックオフかエンドの選択','必ずキックオフ','必ずエンド選択','どちらも選べない'],answer_index:0,explanation:'コイントスに勝ったチームはキックオフをするかエンドを選ぶかを選択できます。'},
+  {level:'easy',question:'フットサルのGKはGKエリアの外でもプレーできる？',choices:['できない、常にエリア内にいないといけない','できるが、エリア外では手を使えない','できるが、エリア外でも4秒ルールが適用され、バックパスも制限される','できる、エリア外ではフィールドプレーヤーと全く同じ扱い'],answer_index:2,explanation:'GKはエリア外でもプレーできます。ただしエリア外でボールをコントロールしても4秒以内に放す必要があり、一度放したボールが相手に触れるか相手陣内に入らない限り、味方からのバックパスを手で受け取ることはできません。'},
+  {level:'mid',question:'キックインのとき、相手選手はボールから何メートル離れないといけない？（5メートルルール）',choices:['1m','3m','5m','10m'],answer_index:2,explanation:'キックインのとき、相手選手はボールから5メートル以上離れないといけません（5メートルルール）。守らないと警告対象になります。'},
+  {level:'mid',question:'フリーキックのとき、相手選手はボールからどのくらい離れないといけない？',choices:['1m','3m','5m','10m'],answer_index:2,explanation:'フリーキックでも相手選手はボールから5メートル以上離れる義務があります（5メートルルール）。壁を作れますが5m以内はNGです。'},
+  {level:'mid',question:'GKが手でボールを放した後、同じピリオド内で自陣の選手からのパスを手で受け取れる？',choices:['いつでも受け取れる','いったん放したら手では受け取れない','相手が触れてからなら受け取れる','4秒たてば受け取れる'],answer_index:2,explanation:'GKがいったん放したボールを自陣選手からのパスで手で再受け取りはできません（バックパスルール）。相手がボールに触れてから初めて手で受け取れます。'},
+  {level:'mid',question:'味方フィールドプレーヤーが足でGKにバックパスを出した。GKは手で取れる？',choices:['取れる','取れない','相手陣内なら取れる','GKエリア内なら取れる'],answer_index:1,explanation:'足での意図的なバックパスをGKが手で処理することは禁止です（バックパスルール）。違反すると間接フリーキックになります。'},
+  {level:'mid',question:'アキュムレートファウル（累積ファウル）が6つ以上になると？',choices:['試合終了','第2PKが与えられる','選手1人退場','警告のみ'],answer_index:1,explanation:'1ピリオドで累積ファウルが6つ以上になると、以降のファウルは第2PK（10mライン）が与えられます。フットサル独特のルールです。'},
+  {level:'mid',question:'フットサルの交代ルールはどれが正しい？',choices:['前後半合わせて3回まで','5人まで','回数・人数ともに無制限','ハーフタイムのみ'],answer_index:2,explanation:'フットサルは回数・人数制限なしのフライングチェンジ（交代ゾーンでの随時交代）が可能です。'},
+  {level:'mid',question:'選手が退場になった場合、何分後にベンチから交代選手が入れる？',choices:['1分後','2分後','5分後','入れない'],answer_index:1,explanation:'退場後2分間は数的不利でプレー。2分後または相手がゴールを決めた後に交代選手が入れます。'},
+  {level:'mid',question:'GKが自陣ゴールエリア内でボールを足でコントロールしている。4秒ルールは適用される？',choices:['適用される','足なら適用されない','エリア外に出たときから適用','GKエリア内では無制限'],answer_index:0,explanation:'4秒ルールはGKがボールをコントロールしている状態全般に適用されます。手でも足でも4秒以内に放たなければなりません。'},
+  {level:'mid',question:'累積ファウルはピリオドごとにリセットされる？',choices:['される','されない','延長戦のみリセットされる','後半開始時のみリセット'],answer_index:0,explanation:'累積ファウル（アキュムレートファウル）はピリオドごとにリセットされます。前半に5つファウルしても、後半は0からスタートです。'},
+  {level:'mid',question:'フットサルの交代ゾーンはどこにある？',choices:['どこでも交代できる','自陣サイドライン沿いの指定エリア','ハーフウェイライン上','どちらのサイドラインでも可'],answer_index:1,explanation:'交代ゾーンは自陣サイドライン沿いの5mエリア。出る選手がエリアを出てから入る選手が入るのが基本です。'},
+  {level:'mid',question:'コーナーキックのとき、相手選手はボールから何メートル離れないといけない？',choices:['3m','5m','10m','制限なし'],answer_index:1,explanation:'コーナーキックでも相手選手はボールから5メートル以上離れる必要があります（5メートルルール）。'},
+  {level:'mid',question:'直接フリーキックと間接フリーキックの違いは？',choices:['距離が違う','直接FKは直接ゴールを狙えるが間接FKは他の選手が触れてからでないとゴールにならない','間接FKのほうが重い反則','どちらも同じ'],answer_index:1,explanation:'直接フリーキックはそのままゴールを狙えます。間接フリーキックは必ず他の選手が触れてからでないとゴールになりません。'},
+  {level:'mid',question:'フットサルで「ダブルペナルティ」とも呼ばれるのは？',choices:['1試合で2枚イエロー','第2PK（累積ファウル後のPK）','PKで外した後の再キック','2人同時退場'],answer_index:1,explanation:'第2PK（10mPK）は累積ファウル6つ目以降に与えられるペナルティで「ダブルペナルティ」とも呼ばれます。'},
+  {level:'mid',question:'キックインを行う前に、キッカーはボールをラインからどのくらいの距離に置く？',choices:['ライン上','ラインから25cm以内','ラインから1m以内','どこでもOK'],answer_index:1,explanation:'キックインはボールをタッチラインから25cm以内に置いてキックします。ラインを踏んではいけません。'},
+  {level:'mid',question:'試合中にボールが破裂したり形が変わった場合は？',choices:['直前に触れた選手のチームが再開','ドロップボールで再開','審判がボールを交換してドロップボールで再開','相手チームのキックインで再開'],answer_index:2,explanation:'試合中にボールが使用不能になった場合、審判がボールを交換してドロップボールで再開します。'},
+  {level:'hard',question:'GKが4秒以内に放したが、すぐ別の味方に渡してまたGKに戻した場合は？',choices:['問題なし','間接フリーキック','直接フリーキック','第2PK'],answer_index:1,explanation:'GKが放したボールを意図的に同じピリオド内で手で再受け取りするのは違反。間接フリーキックになります（バックパスルールの一部）。'},
+  {level:'hard',question:'タイムアウトは1チーム各ピリオドに何回取れる？',choices:['1回','2回','3回','なし'],answer_index:0,explanation:'タイムアウトは各チーム各ピリオドに1回（1分間）取れます。延長戦では各1回追加されます。'},
+  {level:'hard',question:'キックインのキッカーは、他の選手が触れる前に再びボールに触れられる？',choices:['触れない','触れる','足なら触れる','GKなら触れる'],answer_index:0,explanation:'キックインのキッカーは、他の選手がボールに触れるまで再びボールに触れることができません。違反すると相手のキックインになります。'},
+  {level:'hard',question:'ゴールクリアランスの説明として正しいのは？',choices:['GKが手でボールを投げて再開','攻撃側がゴールラインを出したときGKがエリア内からキックで再開','ゴール前でのコーナーキック','守備側がゴールラインを出したときの再開'],answer_index:1,explanation:'ゴールクリアランスは攻撃側がボールをゴールラインの外に出したとき、GKがゴールエリア内からキックで再開する方法です。'},
+  {level:'hard',question:'第2PK（10mPK）でGKはキックされるまでどこにいないといけない？',choices:['ゴールライン上','ゴールエリア内ならどこでも','動き方の制限なし','ゴールポストに触れていないといけない'],answer_index:0,explanation:'第2PKではGKはキックされるまでゴールライン上にいなければなりません。左右にポスト間を動くことは可能です。'},
+  {level:'hard',question:'間接フリーキックのとき、ボールが直接ゴールに入った場合は？',choices:['ゴール認定','相手のゴールクリアランスで再開','コーナーキックで再開','ドロップボールで再開'],answer_index:1,explanation:'間接FKのボールが他の選手に触れずに直接ゴールに入ってもゴールにはなりません。相手チームのゴールクリアランスで再開します。'},
+  {level:'hard',question:'GKがゴールエリア内から手で放ったボールがハーフウェイラインを越えたらどうなる？',choices:['問題なし','相手チームのキックインで再開','相手チームの間接FK','ドロップボール'],answer_index:1,explanation:'GKがゴールエリア内から手で放ったボールがハーフウェイラインを越えた場合、相手チームのキックインでハーフウェイライン上から再開されます。'},
+  {level:'hard',question:'フットサルの延長戦のルールは？',choices:['15分×2本','5分×2本（Vゴール方式の場合も）','10分×2本','延長なしでPK'],answer_index:1,explanation:'フットサルの延長戦は一般的に5分×2本で行われます。大会規定によりVゴール（サドンデス）方式が採用される場合もあります。'},
+  {level:'hard',question:'フットサルで「パワープレー」とは何？',choices:['特定の攻撃戦術の名称','GKをフィールドプレーヤーに替えて6人で攻める戦術','累積ファウルが6以上の状態','延長戦での特別ルール'],answer_index:1,explanation:'フットサルのパワープレーはGKをフィールドプレーヤーに交代させ、6人で攻める戦術です。空のゴールへのロングシュートを打たれるリスクもあります。'},
+  {level:'hard',question:'パワープレー中（GK不在）に相手がロングシュートで空ゴールに決めた場合、そのゴールは有効？',choices:['有効','無効','GKが戻れば無効','審判の判断による'],answer_index:0,explanation:'パワープレー中の空ゴールへのシュートも完全に有効なゴールです。パワープレーは自チームのリスクを承知の上で行う戦術です。'},
+  {level:'hard',question:'第2PKのとき、壁を作ることができる？',choices:['できる','できない','5人まで壁を作れる','GKのみ壁に入れる'],answer_index:1,explanation:'第2PKは通常のFKではなくPK形式なので、壁を作ることはできません。キッカーとGKの1対1になります。'},
+  {level:'hard',question:'コーナーキックのボールが直接ゴールに入った場合は？',choices:['ゴール認定','ノーゴール','相手のPK','ドロップボール'],answer_index:0,explanation:'コーナーキックから直接ゴールに入った場合はゴールになります。'}
 ];
 
-let questions=[];
-let editingId=null;
-let currentLevel='all';
-let adminFilter='all';
-let quizCurrent=0;
-let quizScore=0;
-let quizAnswered=false;
-let quizQuestions=[];
-let correctCount=0;
-let wrongCount=0;
-let nextId=100;
-
-function init(){
-  try{
-    const saved=localStorage.getItem('futsalQuiz_v4');
-    if(saved){const d=JSON.parse(saved);questions=d.questions;nextId=d.nextId||200;}
-    else{questions=JSON.parse(JSON.stringify(INITIAL));}
-  }catch(e){questions=JSON.parse(JSON.stringify(INITIAL));}
-  renderAdmin();
-  restartQuiz();
-}
-function persist(){
-  try{localStorage.setItem('futsalQuiz_v4',JSON.stringify({questions,nextId}));}catch(e){}
-}
-function showToast(msg,isErr=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=isErr?'#ef4444':'#22c55e';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
-function switchTab(tab){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  document.getElementById('quizPanel').style.display=tab==='quiz'?'':'none';
-  document.getElementById('adminPanel').style.display=tab==='admin'?'':'none';
-  if(tab==='admin')renderAdmin();
-}
-
-/* QUIZ */
-function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function setLevel(level){
-  currentLevel=level;
-  document.querySelectorAll('.level-btn').forEach(b=>b.classList.toggle('active',b.dataset.level===level));
-  restartQuiz();
-}
-function restartQuiz(){
-  quizCurrent=0;quizScore=0;quizAnswered=false;correctCount=0;wrongCount=0;
-  const pool=currentLevel==='all'?questions:questions.filter(q=>q.level===currentLevel);
-  quizQuestions=shuffle(pool).slice(0,Math.min(10,pool.length));
-  document.getElementById('quizArea').style.display='';
-  document.getElementById('resultArea').style.display='none';
-  if(quizQuestions.length===0){
-    document.getElementById('quizArea').innerHTML='<div class="empty-msg">このレベルの問題がありません</div>';
-    return;
+// Supabase API
+async function sbFetch(path, options={}) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    ...options,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': options.prefer || '',
+      ...options.headers
+    }
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
   }
+  if (res.status === 204) return null;
+  return res.json();
+}
+
+// State
+let allQuestions = [];
+let quizQuestions = [];
+let currentLevel = 'all';
+let quizCurrent = 0;
+let quizScore = 0;
+let quizAnswered = false;
+let correctCount = 0;
+let wrongCount = 0;
+let adminFilter = 'all';
+let editingId = null;
+let seeded = false;
+
+// Init
+async function init() {
+  try {
+    await loadQuestions();
+    // seed if empty
+    if (allQuestions.length === 0 && !seeded) {
+      seeded = true;
+      showToast('初期データを登録中...', '#378ADD');
+      for (const q of INITIAL_QUESTIONS) {
+        await sbFetch(TABLE, {
+          method: 'POST',
+          prefer: 'return=minimal',
+          body: JSON.stringify(q)
+        });
+      }
+      await loadQuestions();
+    }
+    updateStats();
+    enableStart();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('startBtn').textContent = '接続エラー';
+  }
+}
+
+async function loadQuestions() {
+  allQuestions = await sbFetch(TABLE + '?order=id.asc') || [];
+}
+
+function updateStats() {
+  document.getElementById('statTotal').textContent = allQuestions.length;
+  document.getElementById('statEasy').textContent = allQuestions.filter(q=>q.level==='easy').length;
+  document.getElementById('statHard').textContent = allQuestions.filter(q=>q.level==='hard').length;
+}
+
+function enableStart() {
+  const btn = document.getElementById('startBtn');
+  btn.disabled = false;
+  btn.textContent = 'スタート →';
+}
+
+// Quiz
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function setLevel(level) {
+  currentLevel = level;
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active', b.dataset.level === level));
+}
+
+function startQuiz() {
+  const pool = currentLevel === 'all' ? allQuestions : allQuestions.filter(q => q.level === currentLevel);
+  if (pool.length === 0) { showToast('このレベルの問題がありません', '#ef4444'); return; }
+  quizQuestions = shuffle(pool).slice(0, Math.min(10, pool.length));
+  quizCurrent = 0; quizScore = 0; correctCount = 0; wrongCount = 0; quizAnswered = false;
+  document.getElementById('homeScreen').style.display = 'none';
+  document.getElementById('quizWrap').style.display = 'block';
+  document.getElementById('resultCard').style.display = 'none';
   showQuestion();
 }
-function showQuestion(){
-  const q=quizQuestions[quizCurrent];
-  const total=quizQuestions.length;
-  document.getElementById('progressFill').style.width=(quizCurrent/total*100)+'%';
-  document.getElementById('progressLabel').textContent=`${quizCurrent+1} / ${total}`;
-  document.getElementById('qCounter').textContent=`問題 ${quizCurrent+1}`;
-  const badge=document.getElementById('qBadge');
-  const bMap={easy:['初級','badge-easy'],mid:['中級','badge-mid'],hard:['上級','badge-hard']};
-  badge.textContent=bMap[q.level][0];badge.className='badge '+bMap[q.level][1];
-  document.getElementById('qText').textContent=q.q;
-  const choicesEl=document.getElementById('choices');
-  choicesEl.innerHTML='';
-  q.choices.forEach((c,i)=>{
-    const btn=document.createElement('button');
-    btn.className='choice-btn';btn.textContent=c;
-    btn.onclick=()=>selectAnswer(i);
+
+function showQuestion() {
+  const q = quizQuestions[quizCurrent];
+  const total = quizQuestions.length;
+  document.getElementById('progressFill').style.width = (quizCurrent/total*100) + '%';
+  document.getElementById('progressLabel').textContent = (quizCurrent+1) + '/' + total;
+  document.getElementById('qNum').textContent = '問題 ' + (quizCurrent+1);
+  const badge = document.getElementById('qBadge');
+  const bMap = {easy:['初級','badge-easy'],mid:['中級','badge-mid'],hard:['上級','badge-hard']};
+  badge.textContent = bMap[q.level][0]; badge.className = 'badge ' + bMap[q.level][1];
+  document.getElementById('qText').textContent = q.question;
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  const labels = ['A','B','C','D'];
+  q.choices.forEach((c,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = '<span class="choice-num">' + labels[i] + '</span>' + c;
+    btn.onclick = () => selectAnswer(i);
     choicesEl.appendChild(btn);
   });
-  document.getElementById('explanation').className='explanation';
-  document.getElementById('nextBtn').className='next-btn';
-  quizAnswered=false;
-}
-function selectAnswer(idx){
-  if(quizAnswered)return;
-  quizAnswered=true;
-  const q=quizQuestions[quizCurrent];
-  document.querySelectorAll('.choice-btn').forEach((btn,i)=>{
-    btn.disabled=true;
-    if(i===q.ans)btn.classList.add('correct');
-    else if(i===idx&&i!==q.ans)btn.classList.add('wrong');
-  });
-  if(idx===q.ans){quizScore++;correctCount++;}else wrongCount++;
-  const expEl=document.getElementById('explanation');
-  expEl.textContent=q.exp;expEl.className='explanation show';
-  document.getElementById('nextBtn').className='next-btn show';
-}
-function nextQuestion(){
-  quizCurrent++;
-  if(quizCurrent>=quizQuestions.length)showResult();
-  else showQuestion();
-}
-function showResult(){
-  document.getElementById('quizArea').style.display='none';
-  document.getElementById('resultArea').style.display='';
-  const total=quizQuestions.length;
-  document.getElementById('resultScore').textContent=quizScore;
-  document.getElementById('resultTotal').textContent=`/ ${total}問`;
-  document.getElementById('resultStats').innerHTML=`
-    <div class="stat"><div class="stat-label">正解</div><div class="stat-val" style="color:#22c55e">${correctCount}</div></div>
-    <div class="stat"><div class="stat-label">不正解</div><div class="stat-val" style="color:#ef4444">${wrongCount}</div></div>`;
-  const pct=quizScore/total;
-  const msgs=['まだまだこれから！繰り返して覚えていこう。','まずまずやな。間違えたとこを復習しよう！','ええ感じやで！あと少しで審判も安心。','ほぼ完璧！審判ライセンス余裕やで！'];
-  document.getElementById('resultMsg').textContent=msgs[pct>=0.9?3:pct>=0.7?2:pct>=0.5?1:0];
+  document.getElementById('explanation').className = 'explanation';
+  document.getElementById('nextBtn').className = 'next-btn';
+  quizAnswered = false;
 }
 
-/* ADMIN */
-function setFilter(f){
-  adminFilter=f;
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.toggle('active',c.dataset.f===f));
+function selectAnswer(idx) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizQuestions[quizCurrent];
+  document.querySelectorAll('.choice-btn').forEach((btn,i) => {
+    btn.disabled = true;
+    if (i === q.answer_index) btn.classList.add('correct');
+    else if (i === idx && i !== q.answer_index) btn.classList.add('wrong');
+  });
+  if (idx === q.answer_index) { quizScore++; correctCount++; } else wrongCount++;
+  const expEl = document.getElementById('explanation');
+  expEl.textContent = q.explanation; expEl.className = 'explanation show';
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  quizCurrent++;
+  if (quizCurrent >= quizQuestions.length) showResult();
+  else showQuestion();
+}
+
+function showResult() {
+  document.getElementById('quizWrap').style.display = 'none';
+  const card = document.getElementById('resultCard');
+  card.style.display = 'block';
+  const total = quizQuestions.length;
+  document.getElementById('resultScore').textContent = quizScore;
+  document.getElementById('resultDenom').textContent = '/ ' + total + '問';
+  document.getElementById('resultGrid').innerHTML =
+    '<div class="result-stat"><div class="result-stat-val" style="color:var(--green)">' + correctCount + '</div><div class="result-stat-label">正解</div></div>' +
+    '<div class="result-stat"><div class="result-stat-val" style="color:var(--red)">' + wrongCount + '</div><div class="result-stat-label">不正解</div></div>';
+  const pct = quizScore/total;
+  const msgs = ['まだまだこれから！繰り返して覚えていこう。','まずまずやな。間違えたとこを復習しよう！','ええ感じやで！あと少しで審判も安心。','ほぼ完璧！審判ライセンス余裕やで！'];
+  document.getElementById('resultMsg').textContent = msgs[pct>=0.9?3:pct>=0.7?2:pct>=0.5?1:0];
+}
+
+function backToHome() {
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('homeScreen').style.display = '';
+  document.getElementById('quizWrap').style.display = 'none';
+}
+
+// Admin
+function toggleAdmin() {
+  const panel = document.getElementById('adminPanel');
+  const quiz = document.getElementById('quizPanel');
+  const btn = document.getElementById('adminToggle');
+  const isShowing = panel.classList.contains('show');
+  panel.classList.toggle('show', !isShowing);
+  quiz.style.display = isShowing ? '' : 'none';
+  btn.classList.toggle('active', !isShowing);
+  btn.textContent = isShowing ? '管理画面' : '← 戻る';
+  if (!isShowing) renderAdmin();
+}
+
+function setAdminFilter(f) {
+  adminFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.f === f));
   renderAdmin();
 }
-function renderAdmin(){
-  const filtered=adminFilter==='all'?questions:questions.filter(q=>q.level===adminFilter);
-  document.getElementById('adminCount').textContent=`全${questions.length}問`;
-  const bLabel={easy:'初級',mid:'中級',hard:'上級'};
-  const bClass={easy:'badge-easy',mid:'badge-mid',hard:'badge-hard'};
-  const listEl=document.getElementById('qList');
-  if(filtered.length===0){listEl.innerHTML='<div class="empty-msg">問題がありません</div>';return;}
-  listEl.innerHTML=filtered.map(q=>`
+
+function renderAdmin() {
+  const filtered = adminFilter === 'all' ? allQuestions : allQuestions.filter(q => q.level === adminFilter);
+  document.getElementById('adminCount').textContent = '問題一覧（全' + allQuestions.length + '問）';
+  const bLabel = {easy:'初級',mid:'中級',hard:'上級'};
+  const bClass = {easy:'badge-easy',mid:'badge-mid',hard:'badge-hard'};
+  const listEl = document.getElementById('adminList');
+  if (filtered.length === 0) { listEl.innerHTML = '<div class="empty-msg">問題がありません</div>'; return; }
+  listEl.innerHTML = filtered.map(q => `
     <div class="q-item">
       <div class="q-item-header">
-        <div class="q-item-text">${q.q}</div>
+        <div class="q-item-text">${q.question}</div>
         <div class="q-item-actions">
           <button class="edit-btn" onclick="openForm(${q.id})">編集</button>
           <button class="del-btn" onclick="deleteQ(${q.id})">削除</button>
         </div>
       </div>
-      <div class="q-item-meta"><span class="badge ${bClass[q.level]}">${bLabel[q.level]}</span> 正解：${q.choices[q.ans]}</div>
+      <div class="q-item-meta"><span class="badge ${bClass[q.level]}">${bLabel[q.level]}</span> 正解：${q.choices[q.answer_index]}</div>
     </div>`).join('');
 }
-function openForm(id=null){
-  editingId=id;
-  document.getElementById('formArea').style.display='';
-  document.getElementById('formTitle').textContent=id?'問題を編集':'問題を追加';
-  const q=id?questions.find(x=>x.id===id):null;
-  document.getElementById('fQuestion').value=q?q.q:'';
-  document.getElementById('fLevel').value=q?q.level:'easy';
-  document.getElementById('fExp').value=q?q.exp:'';
-  const choices=q?q.choices:['','','',''];
-  const ans=q?q.ans:0;
-  document.getElementById('ansGroup').innerHTML=choices.map((c,i)=>`
+
+function openForm(id=null) {
+  editingId = id;
+  document.getElementById('formArea').style.display = '';
+  document.getElementById('formTitle').textContent = id ? '問題を編集' : '問題を追加';
+  document.getElementById('formError').innerHTML = '';
+  const q = id ? allQuestions.find(x => x.id === id) : null;
+  document.getElementById('fQuestion').value = q ? q.question : '';
+  document.getElementById('fLevel').value = q ? q.level : 'easy';
+  document.getElementById('fExp').value = q ? q.explanation : '';
+  const choices = q ? q.choices : ['','','',''];
+  const ans = q ? q.answer_index : 0;
+  document.getElementById('ansGroup').innerHTML = choices.map((c,i) => `
     <div class="ans-row">
       <input type="radio" name="ansRadio" class="ans-radio" value="${i}" ${i===ans?'checked':''} onchange="updateHighlight()">
       <input type="text" class="ans-input${i===ans?' selected':''}" id="c${i}" value="${c}" placeholder="選択肢${i+1}" oninput="updateHighlight()">
     </div>`).join('');
   document.getElementById('formArea').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-function updateHighlight(){
-  const sel=document.querySelector('input[name="ansRadio"]:checked');
-  if(!sel)return;
-  const idx=parseInt(sel.value);
-  [0,1,2,3].forEach(i=>{const el=document.getElementById('c'+i);if(el)el.className='ans-input'+(i===idx?' selected':'');});
+
+function updateHighlight() {
+  const sel = document.querySelector('input[name="ansRadio"]:checked');
+  if (!sel) return;
+  const idx = parseInt(sel.value);
+  [0,1,2,3].forEach(i => { const el = document.getElementById('c'+i); if(el) el.className = 'ans-input' + (i===idx?' selected':''); });
 }
-function closeForm(){document.getElementById('formArea').style.display='none';editingId=null;}
-function saveQuestion(){
-  const qText=document.getElementById('fQuestion').value.trim();
-  const level=document.getElementById('fLevel').value;
-  const exp=document.getElementById('fExp').value.trim();
-  const choices=[0,1,2,3].map(i=>(document.getElementById('c'+i)||{value:''}).value.trim());
-  const selRadio=document.querySelector('input[name="ansRadio"]:checked');
-  if(!qText||choices.some(c=>!c)||!exp){showToast('全項目を入力してな',true);return;}
-  if(!selRadio){showToast('正解を選んでな',true);return;}
-  const ans=parseInt(selRadio.value);
-  if(editingId){
-    const idx=questions.findIndex(x=>x.id===editingId);
-    if(idx>-1)questions[idx]={...questions[idx],q:qText,level,choices,ans,exp};
-    showToast('更新したで！');
-  }else{
-    questions.push({id:nextId++,level,q:qText,choices,ans,exp});
-    showToast('追加したで！');
+
+function closeForm() { document.getElementById('formArea').style.display = 'none'; editingId = null; }
+
+async function saveQuestion() {
+  const question = document.getElementById('fQuestion').value.trim();
+  const level = document.getElementById('fLevel').value;
+  const explanation = document.getElementById('fExp').value.trim();
+  const choices = [0,1,2,3].map(i => (document.getElementById('c'+i)||{value:''}).value.trim());
+  const selRadio = document.querySelector('input[name="ansRadio"]:checked');
+  const errEl = document.getElementById('formError');
+  if (!question || choices.some(c=>!c) || !explanation) { errEl.innerHTML = '<div class="error-msg">全項目を入力してな</div>'; return; }
+  if (!selRadio) { errEl.innerHTML = '<div class="error-msg">正解を選んでな</div>'; return; }
+  const answer_index = parseInt(selRadio.value);
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = '保存中...';
+  try {
+    if (editingId) {
+      await sbFetch(TABLE + '?id=eq.' + editingId, { method:'PATCH', prefer:'return=minimal', body: JSON.stringify({question,level,choices,answer_index,explanation}) });
+      showToast('更新したで！');
+    } else {
+      await sbFetch(TABLE, { method:'POST', prefer:'return=minimal', body: JSON.stringify({question,level,choices,answer_index,explanation}) });
+      showToast('追加したで！');
+    }
+    await loadQuestions();
+    updateStats();
+    closeForm();
+    renderAdmin();
+  } catch(e) {
+    errEl.innerHTML = '<div class="error-msg">保存エラー：' + e.message + '</div>';
+  } finally {
+    btn.disabled = false; btn.textContent = '保存';
   }
-  persist();closeForm();renderAdmin();
 }
-function deleteQ(id){
-  if(!confirm('この問題を削除してええ？'))return;
-  questions=questions.filter(x=>x.id!==id);
-  persist();showToast('削除したで');renderAdmin();
+
+async function deleteQ(id) {
+  if (!confirm('この問題を削除してええ？')) return;
+  try {
+    await sbFetch(TABLE + '?id=eq.' + id, { method:'DELETE' });
+    allQuestions = allQuestions.filter(x => x.id !== id);
+    updateStats();
+    renderAdmin();
+    showToast('削除したで');
+  } catch(e) { showToast('削除エラー', '#ef4444'); }
 }
+
+function showToast(msg, bg='#22c55e') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.background = bg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
 init();
 </script>
 </body>
