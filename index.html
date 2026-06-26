@@ -222,7 +222,7 @@ select.form-input{cursor:pointer}
       <div class="section-label">モードを選択</div>
       <div class="mode-row">
         <button class="mode-btn active" data-mode="normal" onclick="setMode('normal')">📖 通常モード<span>じっくり考える</span></button>
-        <button class="mode-btn" data-mode="time" onclick="setMode('time')">⏱ タイムアタック<span>15秒で判断！</span></button>
+        <button class="mode-btn" data-mode="time" onclick="setMode('time')">⏱ タイムアタック<span>5秒で判断！</span></button>
       </div>
       <button class="start-btn" id="startBtn" onclick="startQuiz()" disabled>読み込み中...</button>
       <button class="reset-btn" onclick="resetProgress()">🔄 最初からやり直す</button>
@@ -322,7 +322,7 @@ const SUPABASE_KEY = 'sb_publishable_8gzvjce_ch1-c-Bwzfm-FA_Q2rHy8G0';
 const TABLE = 'quiz_questions';
 const PASS_SCORE = 8;
 const QUIZ_COUNT = 10;
-const TIME_LIMIT = 15;
+const TIME_LIMIT = 5;
 
 let currentMode = 'normal';
 let timerInterval = null;
@@ -481,7 +481,7 @@ function updateTimerUI() {
   num.textContent = secs;
   const pct = (timeLeft / TIME_LIMIT) * 100;
   bar.style.width = pct + '%';
-  const danger = timeLeft <= 5;
+  const danger = timeLeft <= 2;
   num.className = 'timer-num' + (danger ? ' danger' : '');
   bar.className = 'timer-bar-fill ' + (danger ? 'danger' : 'safe');
 }
